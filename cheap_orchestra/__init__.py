@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from .cheap_orchestra import *
 """Top-level package for Cheap Orchestra."""
 
 __author__ = """André Portela"""

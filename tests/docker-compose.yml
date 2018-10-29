@@ -1,0 +1,20 @@
+version: "3.6"
+
+services:
+  front:
+    image: nginx:1.13
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - api
+
+  api:
+    image: python:3.7
+    expose:
+      - 80
+    depends_on:
+      - database
+
+  database:
+    image: postgres:10.4-alpine
