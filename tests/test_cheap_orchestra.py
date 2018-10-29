@@ -25,18 +25,18 @@ class TestCheapOrchestra(TestCase):
         suffix_name = "suffix-a"
         final_name = "front-suffix-a"
         # when
-        compose_object = self.maestro.append_service_name(service_name, suffix_name)
+        maestro = self.maestro.append_service_name(service_name, suffix_name)
         # then
-        self.assertIsNotNone(compose_object["services"].get(final_name))
+        self.assertIsNotNone(maestro.compose_dict["services"].get(final_name))
 
     def test_append_service_name_with_front_and_suffix_a_must_delete_front_key(self):
         # given
         service_name = "front"
         suffix_name = "suffix-a"
         # when
-        compose_object = self.maestro.append_service_name(service_name, suffix_name)
+        maestro = self.maestro.append_service_name(service_name, suffix_name)
         # then
-        self.assertIsNone(compose_object["services"].get(service_name))
+        self.assertIsNone(maestro.compose_dict["services"].get(service_name))
 
     def test_append_service_name_with_api_and_hiffen_suffix_b_must_create_api_suffix_b_key(self):
         # given
@@ -44,9 +44,9 @@ class TestCheapOrchestra(TestCase):
         suffix_name = "-suffix_b"
         final_name = "api-suffix-b"
         # when
-        compose_object = self.maestro.append_service_name(service_name, suffix_name)
+        maestro = self.maestro.append_service_name(service_name, suffix_name)
         # then
-        self.assertIsNotNone(compose_object["services"].get(final_name))
+        self.assertIsNotNone(maestro.compose_dict["services"].get(final_name))
 
     def test_append_service_name_with_database_and_slash_suffix_c_must_create_database_suffix_c_key(self):
         # given
@@ -54,9 +54,9 @@ class TestCheapOrchestra(TestCase):
         suffix_name = "/suffix_c"
         final_name = "database-suffix-c"
         # when
-        compose_object = self.maestro.append_service_name(service_name, suffix_name)
+        maestro = self.maestro.append_service_name(service_name, suffix_name)
         # then
-        self.assertIsNotNone(compose_object["services"].get(final_name))
+        self.assertIsNotNone(maestro.compose_dict["services"].get(final_name))
 
     def test_append_service_name_with_database_and_backslash_suffix_c_must_create_database_suffix_c_key(self):
         # given
@@ -64,9 +64,9 @@ class TestCheapOrchestra(TestCase):
         suffix_name = "\suffix_c"
         final_name = "database-suffix-c"
         # when
-        compose_object = self.maestro.append_service_name(service_name, suffix_name)
+        maestro = self.maestro.append_service_name(service_name, suffix_name)
         # then
-        self.assertIsNotNone(compose_object["services"].get(final_name))
+        self.assertIsNotNone(maestro.compose_dict["services"].get(final_name))
 
     def test_command_line_interface(self):
         """Test the CLI."""
