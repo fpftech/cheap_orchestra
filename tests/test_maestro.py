@@ -3,21 +3,19 @@
 
 """Tests for `cheap_orchestra` package."""
 
-from cheap_orchestra import Maestro
-from click.testing import CliRunner
-from cheap_orchestra import cli
+from cheap_orchestra import Maestro, Configuration
 from unittest import TestCase
+import os
 
 
-class TestCheapOrchestra(TestCase):
-    """Tests for `cheap_orchestra` package."""
+class TestMaestro(TestCase):
+    """Tests for `Maestro` class."""
 
     def setUp(self):
         """Set up test fixtures, if any."""
-        self.maestro = Maestro("tests/docker-compose.yml")
-
-    def tearDown(self):
-        """Tear down test fixtures, if any."""
+        base_folder = os.path.dirname(os.path.abspath(__file__))
+        path = os.path.join(base_folder, "docker-compose.yml")
+        self.maestro = Maestro(path)
 
     def test_append_service_name_with_front_and_suffix_a_must_create_front_suffix_a_key(self):
         # given
@@ -68,12 +66,21 @@ class TestCheapOrchestra(TestCase):
         # then
         self.assertIsNotNone(maestro.compose_dict["services"].get(final_name))
 
-    def test_command_line_interface(self):
-        """Test the CLI."""
-        runner = CliRunner()
-        result = runner.invoke(cli.main)
-        assert result.exit_code == 0
-        assert 'cheap_orchestra.cli.main' in result.output
-        help_result = runner.invoke(cli.main, ['--help'])
-        assert help_result.exit_code == 0
-        assert '--help  Show this message and exit.' in help_result.output
+    def test_append_service_name_with_first_invalid_parameter(self):
+        # given
+        suffix_name = "\suffix_c"
+        # when then
+        with self.assertRaises(TypeError):
+            self.maestro.append_service_name(None, suffix_name)
+
+    def test_append_service_name_with_second_invalid_parameter(self):
+        # given
+        service_name = "database"
+        # when then
+        with self.assertRaises(TypeError):
+            self.maestro.append_service_name(service_name, None)
+
+    def test_append_service_name_with_invalid_parameters(self):
+        # given when then
+        with self.assertRaises(TypeError):
+            self.maestro.append_service_name(None, None)
