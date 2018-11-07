@@ -10,3 +10,4 @@ twine==1.12.1
 Click==7.0
 python-slugify==1.2.6
 PyYAML==3.13
+Fabric==2.4.0
